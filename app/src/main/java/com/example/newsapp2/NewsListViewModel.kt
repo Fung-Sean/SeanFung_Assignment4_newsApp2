@@ -5,17 +5,15 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.google.gson.GsonBuilder
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.lang.Exception
-import java.util.Locale.Category
 
 
-private const val TAG = "FetchNews"
+private const val TAG = "NewsListViewModel"
 
 class NewsListViewModel : ViewModel() {
     private val _news = MutableLiveData<List<NewsApiService.News>>()
@@ -31,9 +29,11 @@ class NewsListViewModel : ViewModel() {
 
     init {
         viewModelScope.launch {
-            fetchNews("your_category")
+            fetchNews("business")
+
         }
     }
+
 
     private suspend fun fetchNews(category: String) {
         try {
@@ -44,7 +44,7 @@ class NewsListViewModel : ViewModel() {
                 val articles = response.body()?.articles
                 articles?.let {
                     _news.postValue(it)
-                    Log.d(TAG, "articles: $it")
+                    Log.d(TAG, "Received news articles: $it")
                 } ?: run {
                     Log.e(TAG, "Articles list is null or empty")
                 }

@@ -3,7 +3,6 @@ package com.example.newsapp2
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query
-import java.util.Locale.Category
 
 
 interface NewsApiCall {
